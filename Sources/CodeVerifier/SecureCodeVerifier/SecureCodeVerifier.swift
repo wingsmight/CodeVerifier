@@ -21,6 +21,7 @@ public struct SecureCodeVerifier: View {
     private var textfieldSize: CGSize = .zero
     
     private var action: ((Bool) -> Void)?
+    private var editing: ((String) -> Void)?
     
     public init(code: String) {
         self._viewModel = StateObject(wrappedValue: SecureCodeVerifierViewModel(code: code))
@@ -43,10 +44,11 @@ public struct SecureCodeVerifier: View {
             .padding()
             .onChange(of: insertedCode) { newValue in
                 viewModel.buildFields(for: newValue)
+                editing?(newValue)
             }
             .onReceive(viewModel.$codeCorrect.dropFirst()) { value in
                 action?(value)
-            }
+        }
     }
 }
 
@@ -54,6 +56,12 @@ extension SecureCodeVerifier {
     public func onCodeFilled(perform action: ((Bool) -> Void)?) -> Self {
         var copy = self
         copy.action = action
+        return copy
+    }
+    
+    public func onEdit(perform action: ((String) -> Void)?) -> Self {
+        var copy = self
+        copy.editing = action
         return copy
     }
     
