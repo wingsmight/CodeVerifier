@@ -32,11 +32,8 @@ public struct SecureCodeVerifier: View {
     public var body: some View {
         CodeView(fields: viewModel.fields)
             .background(
-                Rectangle()
-                    .foregroundColor(.white)
-            )
-            .background(
                 SecureTextfield(text: $insertedCode, isFocusable: $isTextFieldFocused, labels: viewModel.fieldNumber)
+                    .opacity(0.0)
             )
             .contentShape(Rectangle())
             .onTapGesture {
