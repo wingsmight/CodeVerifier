@@ -9,7 +9,18 @@ import SwiftUI
 
 public struct Styles {
     
-    public static let defaultStyle = SecureCodeStyle(lineWidth: 20, lineHeight: 2, normalLineColor: .black, errorLineColor: .red, labelWidth: 20, labelHeight: 30, labelSpacing: 15, normalTextColor: .black, errorTextColor: .black, carrierHeight: 30, carrierSpacing: 5, carrierColor: .black)
+    public static let defaultStyle = SecureCodeStyle(lineWidth: 20,
+                                                     lineHeight: 2,
+                                                     normalLineColor: Color.primary,
+                                                     errorLineColor: .red,
+                                                     labelWidth: 20,
+                                                     labelHeight: 30,
+                                                     labelSpacing: 15,
+                                                     normalTextColor: Color.primary,
+                                                     errorTextColor: Color.primary,
+                                                     carrierHeight: 30,
+                                                     carrierSpacing: 5,
+                                                     carrierColor: Color.primary)
 }
 
 public class SecureCodeStyle {
