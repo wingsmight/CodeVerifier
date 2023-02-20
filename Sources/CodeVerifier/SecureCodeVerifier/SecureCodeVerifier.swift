@@ -33,7 +33,7 @@ public struct SecureCodeVerifier: View {
         CodeView(fields: viewModel.fields)
             .background(
                 Rectangle()
-                    .foregroundColor(.white)
+                    .foregroundColor(.clear)
             )
             .background(
                 SecureTextfield(text: $insertedCode, isFocusable: $isTextFieldFocused, labels: viewModel.fieldNumber)
