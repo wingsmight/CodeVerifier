@@ -8,10 +8,10 @@ import SwiftUI
 
 /// Represents the list of all secure code fields
 struct CodeView: View {
-    @Environment(\.secureCodeStyle) var style: SecureCodeStyle
-    
+    private let style = Styles.defaultStyle
+
     var fields: [CodeLabelState]
-    
+
     var body: some View {
         HStack(alignment: .bottom, spacing: style.labelSpacing) {
             ForEach(fields) { labelState in

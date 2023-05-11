@@ -1,35 +1,33 @@
-    //
-    //  SecureCodeVerifier.swift
-    //  CodeVerifier
-    //
-    //  Created by MUSOLINO Antonino on 03/03/2020.
-    //
+//
+//  SecureCodeVerifier.swift
+//  CodeVerifier
+//
+//  Created by MUSOLINO Antonino on 03/03/2020.
+//
 
 import SwiftUI
 
 public struct SecureCodeVerifier: View {
-    
-        /// The style applied to SecureCodeVerifier
-    @Environment(\.secureCodeStyle) var style: SecureCodeStyle
-    
+    private let style = Styles.defaultStyle
+
     @State private var insertedCode: String = ""
     @State private var isTextFieldFocused: Bool = false
-    
+
     @StateObject private var viewModel: SecureCodeVerifierViewModel
-    
-        /// The size of the SecureCodeVerifier
+
+    /// The size of the SecureCodeVerifier
     private var textfieldSize: CGSize = .zero
-    
+
     private var action: ((Bool) -> Void)?
     private var editing: ((String) -> Void)?
-    
+
     public init(code: String) {
-        self._viewModel = StateObject(wrappedValue: SecureCodeVerifierViewModel(code: code))
+        _viewModel = StateObject(wrappedValue: SecureCodeVerifierViewModel(code: code))
         let height = style.labelHeight + style.lineHeight + style.carrierSpacing
         let width = (style.labelWidth * CGFloat(code.count)) + (style.labelSpacing * CGFloat(code.count - 1))
-        self.textfieldSize = CGSize(width: width, height: height)
+        textfieldSize = CGSize(width: width, height: height)
     }
-    
+
     public var body: some View {
         CodeView(fields: viewModel.fields)
             .background(
@@ -48,26 +46,26 @@ public struct SecureCodeVerifier: View {
             }
             .onReceive(viewModel.$codeCorrect.dropFirst()) { value in
                 action?(value)
-        }
+            }
     }
 }
 
-extension SecureCodeVerifier {
-    public func onCodeFilled(perform action: ((Bool) -> Void)?) -> Self {
+public extension SecureCodeVerifier {
+    func onCodeFilled(perform action: ((Bool) -> Void)?) -> Self {
         var copy = self
         copy.action = action
         return copy
     }
-    
-    public func onEdit(perform action: ((String) -> Void)?) -> Self {
+
+    func onEdit(perform action: ((String) -> Void)?) -> Self {
         var copy = self
         copy.editing = action
         return copy
     }
-    
+
     @available(*, deprecated, message: "Use the environment injection instead. This modifier does nothing.")
-    public func withStyle(_ style: SecureCodeStyle) -> Self {
-        return self
+    func withStyle(_: SecureCodeStyle) -> Self {
+        self
     }
 }
 

@@ -3,19 +3,18 @@ import SwiftUI
 /// The smallest view in the verifier.
 /// Contains the text label and the blinking carrier when needed
 struct CodeLabel: View {
-    @Environment(\.secureCodeStyle) var style: SecureCodeStyle
-    
+    let style = Styles.defaultStyle
     let labelState: CodeLabelState
-    
+
     private var lineColor: Color = .clear
     private var textColor: Color = .clear
-    
+
     init(state: CodeLabelState) {
-        self.labelState = state
-        self.lineColor = state.showingError ? style.errorLineColor : style.normalLineColor
-        self.textColor = state.showingError ? style.errorTextColor : style.normalTextColor
+        labelState = state
+        lineColor = state.showingError ? style.errorLineColor : style.normalLineColor
+        textColor = state.showingError ? style.errorTextColor : style.normalTextColor
     }
-    
+
     public var body: some View {
         VStack(spacing: style.carrierSpacing) {
             Text(labelState.textLabel)
@@ -29,7 +28,7 @@ struct CodeLabel: View {
                 .foregroundColor(lineColor)
         }
     }
-    
+
     @ViewBuilder var carrier: some View {
         if labelState.prompting {
             Carrier(height: style.carrierHeight, color: style.carrierColor)
